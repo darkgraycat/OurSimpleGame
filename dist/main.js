@@ -15,7 +15,7 @@
   \**********************/
 /***/ (() => {
 
-eval("console.log('init')\r\n\n\n//# sourceURL=webpack://our_simple_game/./src/index.js?");
+eval("/*\r\n  Entry point\r\n*/\r\n\r\nwindow.addEventListener('load', () => {\r\n  console.log('Game init')\r\n\r\n  const gameElement = document.querySelector('#game')\r\n  gameElement.innerHTML = 'This is root element for game'\r\n\r\n});\n\n//# sourceURL=webpack://our_simple_game/./src/index.js?");
 
 /***/ })
 
