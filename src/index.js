@@ -7,6 +7,8 @@ window.addEventListener('load', () => {
   console.log('Game init')
 
   const gameElement = document.querySelector('#game')
+  const statusElement = document.querySelector('#status')
+
 
   const sceneElement = document.createElement('div')
   sceneElement.style.position = 'relative'
@@ -32,19 +34,71 @@ window.addEventListener('load', () => {
     playerElement.style.top = playerElement.offsetTop + y + 'px'
   }
 
+  const print = (message) => {
+    statusElement.innerHTML = message
+  }
+
+  const playerProps = {
+    speed: {
+      x: 0,
+      y: 0
+    }
+  }
+
+  const airResist = 0.95
+  const speed = 0.5
+
+  const playerUpdate = delta => {
+    move(
+      delta * playerProps.speed.x,
+      delta * playerProps.speed.y
+    )
+    playerProps.speed.x *= airResist
+    playerProps.speed.y *= airResist
+
+    if (Math.abs(playerProps.speed.x) < 0.1) playerProps.speed.x = 0
+    if (Math.abs(playerProps.speed.y) < 0.1) playerProps.speed.y = 0
+  }
+
   window.addEventListener('keydown', e => {
     if (e.code == 'KeyW') {
-      move(0, -10)
+      playerProps.speed.y = -speed
     } else if (e.code == 'KeyS') {
-      move(0, 10)
+      playerProps.speed.y = speed
     } else if (e.code == 'KeyA') {
-      move(-10, 0)
+      playerProps.speed.x = -speed
     } else if (e.code == 'KeyD') {
-      move(10, 0)
+      playerProps.speed.x = speed
     }
-
   })
 
+  let running = false
+  let lastTime = performance.now()
+  const start = () => {
+    console.warn('game started')
+    running = true
+    loop()
+  }
+  const stop = () => {
+    console.warn('game stopped')
+    running = false
+  }
+
+  const loop = t => {
+    const dt = t - lastTime
+
+    playerUpdate(dt)
+    print(`x:${playerElement.offsetLeft} y:${playerElement.offsetTop}`)
+
+    lastTime = t
+
+    if (running) requestAnimationFrame(loop)
+  }
+
+  // export to global scope for debug
+  window.start = start
+  window.stop = stop
 
 
-});
+  start()
+})
