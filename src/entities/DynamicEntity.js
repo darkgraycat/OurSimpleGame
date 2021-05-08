@@ -29,7 +29,7 @@ export default class DynamicEntity extends Entity {
   }
 
   move(x, y) {
-    x ? this.speed.x = x : null
-    y ? this.speed.y = y : null
+    this.speed.x = x
+    this.speed.y = y
   }
 }
