@@ -6,61 +6,65 @@ export default class Entity {
    * @param {String} color color
    * @param {Boolean} isContainer relative or absolute
   */
-  constructor(position, size, color, isContainer) {
-    this.element = document.createElement('div')
-    this.element.style.position = isContainer ? 'relative' : 'absolute'
-    this.element.style.left = position[0] + 'px'
-    this.element.style.top = position[1] + 'px'
-    this.element.style.width = size[0] + 'px'
-    this.element.style.height = size[1] + 'px'
-    this.element.style.backgroundColor = color
+  constructor(position, size, color, isContainer = false) {
+    this._element = document.createElement('div')
+    this.x = position[0]
+    this.y = position[1]
+    this.width = size[0]
+    this.height = size[1]
+    this.color = color
+    this.isContainer = isContainer
+  }
+
+  get element() {
+    return this._element
   }
 
   get x() {
-    return this.element.offsetLeft
+    return this._element.offsetLeft
   }
 
   get y() {
-    return this.element.offsetTop
+    return this._element.offsetTop
   }
 
   get width() {
-    return this.element.offsetWidth
+    return this._element.offsetWidth
   }
 
   get height() {
-    return this.element.offsetHeight
+    return this._element.offsetHeight
   }
 
   get color() {
-    return window.getComputedStyle(this.element).backgroundColor;
+    return window.getComputedStyle(this._element).backgroundColor;
   }
 
   get isContainer() {
-    return window.getComputedStyle(this.element).position === 'relative'
+    return window.getComputedStyle(this._element).position === 'relative'
   }
 
   set x(value) {
-    this.element.style.left = value + 'px'
+    this._element.style.left = value + 'px'
   }
 
   set y(value) {
-    this.element.style.top = value + 'px'
+    this._element.style.top = value + 'px'
   }
 
   set width(value) {
-    this.element.style.width = value + 'px'
+    this._element.style.width = value + 'px'
   }
 
   set height(value) {
-    this.element.style.height = value + 'px'
+    this._element.style.height = value + 'px'
   }
 
   set color(value) {
-    this.element.style.backgroundColor = value
+    this._element.style.backgroundColor = value
   }
 
   set isContainer(value) {
-    this.element.style.position = value ? 'relative' : 'absolute'
+    this._element.style.position = value ? 'relative' : 'absolute'
   }
 }
