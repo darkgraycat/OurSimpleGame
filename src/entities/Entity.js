@@ -1,6 +1,7 @@
 export default class Entity {
 
   /**
+   * Create new Entity
    * @param {Number[]} position [x, y]
    * @param {Number[]} size [width, height]
    * @param {String} color color
@@ -8,6 +9,7 @@ export default class Entity {
   */
   constructor(position, size, color, isContainer = false) {
     this._element = document.createElement('div')
+
     this.x = position[0]
     this.y = position[1]
     this.width = size[0]
