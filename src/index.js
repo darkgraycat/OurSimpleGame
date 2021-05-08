@@ -2,6 +2,7 @@
   Entry point
 */
 
+import Entiny from './entities/Entity'
 
 window.addEventListener('load', () => {
   console.log('Game init')
@@ -10,28 +11,15 @@ window.addEventListener('load', () => {
   const statusElement = document.querySelector('#status')
 
 
-  const sceneElement = document.createElement('div')
-  sceneElement.style.position = 'relative'
-  sceneElement.style.left = '0px'
-  sceneElement.style.top = '0px'
-  sceneElement.style.width = '2000px'
-  sceneElement.style.height = '2000px'
-  sceneElement.style.backgroundColor = '#444'
+  const scene = new Entiny([0, 0], [2000, 2000], '#444', true)
+  const player = new Entiny([400, 200], [50, 50], 'red')
 
-  const playerElement = document.createElement('div')
-  playerElement.style.position = 'absolute'
-  playerElement.style.left = '400px'
-  playerElement.style.top = '200px'
-  playerElement.style.width = '50px'
-  playerElement.style.height = '50px'
-  playerElement.style.backgroundColor = '#f88'
-
-  gameElement.appendChild(sceneElement)
-  sceneElement.appendChild(playerElement)
+  gameElement.appendChild(scene.element)
+  scene.element.appendChild(player.element)
 
   const move = (x, y) => {
-    playerElement.style.left = playerElement.offsetLeft + x + 'px'
-    playerElement.style.top = playerElement.offsetTop + y + 'px'
+    player.x += x
+    player.y += y
   }
 
   const print = (message) => {
@@ -88,7 +76,7 @@ window.addEventListener('load', () => {
     const dt = t - lastTime
 
     playerUpdate(dt)
-    print(`x:${playerElement.offsetLeft} y:${playerElement.offsetTop}`)
+    print(`x:${player.x} y:${player.y}`)
 
     lastTime = t
 
