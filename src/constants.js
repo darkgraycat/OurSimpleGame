@@ -1,0 +1,1 @@
+export const AIR_RESISTANCE = 0.95
